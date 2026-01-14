@@ -89,6 +89,36 @@ pipeline {
             }
         }
         
+        stage('Run List Operations Tests') {
+            steps {
+                echo '=============================================='
+                echo '      Running List Operations Test Suite     '
+                echo '=============================================='
+                
+                bat '''
+                    set PATH=%PYTHON_HOME%;%PYTHON_HOME%\\Scripts;%PATH%
+                    python -m unittest tests.test_list_operations -v
+                '''
+                
+                echo 'List operations tests completed'
+            }
+        }
+        
+        stage('Run Dictionary Operations Tests') {
+            steps {
+                echo '=============================================='
+                echo '  Running Dictionary Operations Test Suite   '
+                echo '=============================================='
+                
+                bat '''
+                    set PATH=%PYTHON_HOME%;%PYTHON_HOME%\\Scripts;%PATH%
+                    python -m unittest tests.test_dictionary_operations -v
+                '''
+                
+                echo 'Dictionary operations tests completed'
+            }
+        }
+        
         stage('Run All Tests Together') {
             steps {
                 echo '=============================================='
@@ -112,8 +142,13 @@ pipeline {
                 echo '=============================================='
                 
                 script {
-                    def totalTests = 11
+                    def totalTests = 23
                     echo "Total Tests Executed: ${totalTests}"
+                    echo "Test Breakdown:"
+                    echo "  - Calculator Tests: 5"
+                    echo "  - String Operations Tests: 6"
+                    echo "  - List Operations Tests: 6"
+                    echo "  - Dictionary Operations Tests: 6"
                     echo "All Stages Passed Successfully!"
                 }
             }
